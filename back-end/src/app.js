@@ -10,7 +10,7 @@ import cors from 'cors'
 
 app.use(cors({
  origin: process.env.ALLOWED_ORIGINS.split(','),
- // credentials: true   // Habilita o envio de cookies para o front-end
+ credentials: true   // Habilita o envio de cookies para o front-end
 }))
 
 app.use(logger('dev'))
@@ -27,6 +27,8 @@ app.use(authMiddleware)
 
 /**************** ROTAS *******************/
 
+// Middleware de verificação de autorização
+
 import customersRoute from './routes/customers.js'
 app.use('/customers', customersRoute)
 
@@ -36,7 +38,7 @@ app.use('/cars', carsRoute)
 import usersRoute from './routes/users.js'
 app.use('/users', usersRoute)
 
-import sellerRoute from './routes/seller.js'
-app.use('/sellers', sellerRoute)
+import sellersRoute from './routes/seller.js'
+app.use('/sellers', sellersRoute)
 
 export default app

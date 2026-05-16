@@ -1,42 +1,55 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+import './App.css'
+import React from 'react'
+import { BrowserRouter } from 'react-router-dom'
+import HeaderBar from './ui/HeaderBar'
+import CssBaseline from '@mui/material/CssBaseline'
+import Box from '@mui/material/Box'
+import { ThemeProvider } from '@mui/material/styles'
+import theme from './ui/theme'
+import FooterBar from './ui/FooterBar'
+import AppRoutes from './routes/AppRoutes'
+
+import AuthContext from './contexts/AuthContext.jsx'
+
+function App() {
+  const [authState, setAuthState] = React.useState({
+   authUser: null,
+   redirectTo: null
+ })
+ const {
+   authUser,
+   redirectTo
+ } = authState
+
+ return (
+   <>
+     <ThemeProvider theme={theme}>
+      
+       <CssBaseline />
+      
+       <BrowserRouter>
+        {/* Qualquer componente carregado entre <AuthContext.Provider> e
+             </AuthContext.Provider> poderá acessar os dados compartilhados
+             por AuthProvider por meio do 'value'
+         */}
+         <AuthContext.Provider value={{ authState, setAuthState }} >
+
+         <HeaderBar />
+
+         {/* Dentro da prop "sx", "m" significa "margin" */}
+         <Box id="innerRoot" sx={{ m: '48px 24px' }}>
+           <AppRoutes />
+         </Box>
+
+         <FooterBar />
+        </AuthContext.Provider>
+
+       </BrowserRouter>
+    
+     </ThemeProvider>
+   </>
+ )
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
+export default App
